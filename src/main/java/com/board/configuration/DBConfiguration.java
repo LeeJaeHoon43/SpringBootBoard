@@ -13,6 +13,8 @@ import org.springframework.context.annotation.PropertySource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
+
 @Configuration // @Configuration이 지정된 클래스를 자바 기반의 설정 파일로 인식.
 @PropertySource("classpath:/application.properties") // 해당 클래스에서 참조할 properties 파일의 위치를 지정.
 public class DBConfiguration {
@@ -50,5 +52,10 @@ public class DBConfiguration {
 	@ConfigurationProperties(prefix = "mybatis.configuration")
 	public org.apache.ibatis.session.Configuration mybatisConfg(){
 		return new org.apache.ibatis.session.Configuration();
+	}
+	
+	@Bean
+	public LayoutDialect layoutDialect() {
+		return new LayoutDialect();
 	}
 }
