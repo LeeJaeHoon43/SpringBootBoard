@@ -10,18 +10,23 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration // @Configuration이 지정된 클래스를 자바 기반의 설정 파일로 인식.
+@EnableTransactionManagement
 @PropertySource("classpath:/application.properties") // 해당 클래스에서 참조할 properties 파일의 위치를 지정.
 public class DBConfiguration {
 	
 	@Autowired
 	private ApplicationContext applicationContext;
-	
+
 	@Bean
 	@ConfigurationProperties(prefix = "spring.datasource.hikari")
 	public HikariConfig hikariConfig() {
@@ -57,5 +62,10 @@ public class DBConfiguration {
 	@Bean
 	public LayoutDialect layoutDialect() {
 		return new LayoutDialect();
+	}
+	
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		return new DataSourceTransactionManager(dataSource());
 	}
 }
