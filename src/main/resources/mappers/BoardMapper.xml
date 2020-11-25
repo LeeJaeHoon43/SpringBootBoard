@@ -3,7 +3,7 @@
 <mapper namespace="com.board.mapper.BoardMapper">
 
 	<sql id="boardColumns">
-		idx
+		  idx
 		, title
 		, content
 		, writer
@@ -15,12 +15,12 @@
 		, update_time
 		, delete_time
 	</sql>
-	
+
 	<insert id="insertBoard" parameterType="BoardDTO">
-		INSERT INTO tb_board(
-			<include refid="boardColumns"/>
-		) VALUES(
-			#{idx}
+		INSERT INTO tb_board (
+			<include refid="boardColumns" />
+		) VALUES (
+			  #{idx}
 			, #{title}
 			, #{content}
 			, #{writer}
@@ -33,45 +33,63 @@
 			, NULL
 		)
 	</insert>
-	
+
 	<select id="selectBoardDetail" parameterType="long" resultType="BoardDTO">
-		SELECT 
-			<include refid="boardColumns"/>
-		FROM tb_board
-		WHERE delete_yn = 'N'
-		AND idx = #{idx} 
+		SELECT
+			<include refid="boardColumns" />
+		FROM
+			tb_board
+		WHERE
+			delete_yn = 'N'
+		AND
+			idx = #{idx}
 	</select>
-	
+
 	<update id="updateBoard" parameterType="BoardDTO">
 		UPDATE tb_board
 		SET
-			update_time = NOW()
+			  update_time = NOW()
 			, title = #{title}
 			, content = #{content}
 			, writer = #{writer}
 			, notice_yn = IFNULL(#{noticeYn}, 'N')
 			, secret_yn = IFNULL(#{secretYn}, 'N')
-		WHERE idx = #{idx}
+		WHERE
+			idx = #{idx}
 	</update>
-	
+
 	<update id="deleteBoard" parameterType="long">
 		UPDATE tb_board
-		SET 
-			delete_yn = 'Y'
+		SET
+			  delete_yn = 'Y'
 			, delete_time = NOW()
-		WHERE idx = #{idx}
+		WHERE
+			idx = #{idx}
 	</update>
-	
+
 	<select id="selectBoardList" parameterType="BoardDTO" resultType="BoardDTO">
-		SELECT 
-			<include refid="boardColumns"/>
-		FROM tb_board
-		WHERE delete_yn = 'N'
-		ORDER BY notice_yn ASC, idx DESC, insert_time DESC
+		SELECT
+			<include refid="boardColumns" />
+		FROM
+			tb_board
+		WHERE
+			delete_yn = 'N'
+		<include refid="CommonMapper.search" />
+		ORDER BY
+			notice_yn ASC,
+			idx DESC,
+			insert_time DESC
+		<include refid="CommonMapper.paging" />
 	</select>
-	
+
 	<select id="selectBoardTotalCount" parameterType="BoardDTO" resultType="int">
-		SELECT COUNT(*) FROM tb_board WHERE delete_yn = 'N'
+		SELECT
+			COUNT(*)
+		FROM
+			tb_board
+		WHERE
+			delete_yn = 'N'
+		<include refid="CommonMapper.search" />
 	</select>
 
 </mapper>

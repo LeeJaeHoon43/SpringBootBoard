@@ -9,6 +9,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.board.domain.BoardDTO;
 import com.board.mapper.BoardMapper;
+import com.board.paging.Criteria;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -90,10 +91,10 @@ public class MapperTests {
 	}
 	
 	@Test
-	public void testSelectList() {
-		int boardTotalCount = boardMapper.selectBoardTotalCount();
+	public void testSelectList(BoardDTO params) {
+		int boardTotalCount = boardMapper.selectBoardTotalCount(params);
 		if (boardTotalCount > 0) {
-			List<BoardDTO> boardList = boardMapper.selectBoardList();
+			List<BoardDTO> boardList = boardMapper.selectBoardList(params);
 			if (CollectionUtils.isEmpty(boardList) == false) {
 				for (BoardDTO board : boardList) {
 					System.out.println("=========================");

@@ -1,12 +1,11 @@
 package com.board.domain;
 
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardDTO {
+public class BoardDTO extends CommonDTO {
 	private Long idx; // 번호(PK).
 	private String title; // 제목.
 	private String content; // 내용.
@@ -14,10 +13,6 @@ public class BoardDTO {
 	private int viewCnt; // 조회수.
 	private String noticeYn; // 공지여부.
 	private String secretYn; // 비밀여부.
-	private String deleteYn; // 삭제여부.
-	private LocalDateTime insertTime; // 등록일.
-	private LocalDateTime updateTime; // 수정일.
-	private LocalDateTime deleteTime; // 삭제일.
 	
 	public Long getIdx() {
 		return idx;
@@ -60,29 +55,5 @@ public class BoardDTO {
 	}
 	public void setSecretYn(String secretYn) {
 		this.secretYn = secretYn;
-	}
-	public String getDeleteYn() {
-		return deleteYn;
-	}
-	public void setDeleteYn(String deleteYn) {
-		this.deleteYn = deleteYn;
-	}
-	public LocalDateTime getInsertTime() {
-		return insertTime;
-	}
-	public void setInsertTime(LocalDateTime insertTime) {
-		this.insertTime = insertTime;
-	}
-	public LocalDateTime getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(LocalDateTime updateTime) {
-		this.updateTime = updateTime;
-	}
-	public LocalDateTime getDeleteTime() {
-		return deleteTime;
-	}
-	public void setDeleteTime(LocalDateTime deleteTime) {
-		this.deleteTime = deleteTime;
 	}
 }
