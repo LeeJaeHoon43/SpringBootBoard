@@ -48,6 +48,7 @@
 				<a th:href="|@{/board/write.do}*{makeQueryString(currentPageNo)}&idx=${board.idx}|" class="btn btn-primary waves-effect waves-light">수정하기</a>
 				<button type="button" class="btn btn-danger waves-effect waves-light" th:onclick="deleteBoard([[ ${board.idx} ]], [[ *{makeQueryString(currentPageNo)} ]])">삭제하기</button>
 			</div>
+
 		</div>
 		<!-- /.card-content -->
 	</th:block>
@@ -70,13 +71,13 @@
 						<li>
 							<span class="name">Betty Simmons</span>
 							<span class="desc">There are new settings available</span>
-							<span class="time">2020.11.20</span>
+							<span class="time">2019.03.26</span>
 							<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
 						</li>
 						<li>
 							<span class="name">Betty Kim</span>
 							<span class="desc">There are new settings available</span>
-							<span class="time">2020.11.21</span>
+							<span class="time">2019.03.15</span>
 							<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
 						</li>
 					</ul>
@@ -86,14 +87,20 @@
 		</div>
 		<!-- /.box-content -->
 	</th:block>
+
 	<th:block layout:fragment="script">
 		<script th:inline="javascript">
+			/*<![CDATA[*/
+
 			function deleteBoard(idx, queryString) {
+
 				if (confirm(idx + "번 게시글을 삭제할까요?")) {
 					var uri = /*[[ @{/board/delete.do} ]]*/;
 					var html = "";
+			
 					html += '<form name="dataForm" action="'+uri+'" method="post">';
 					html += '<input type="hidden" name="idx" value="'+idx+'" />';
+			
 					/*[- 쿼리 스트링을 오브젝트 형태로 변환 -]*/
 					queryString = new URLSearchParams(queryString);
 					queryString.forEach(function(value, key) {
@@ -101,12 +108,16 @@
 							html += '<input type="hidden" name="' + key + '" value="' + value + '" />';
 						}
 					});
+			
 					html += '</form>';
+			
 					$("body").append(html);
 					document.dataForm.submit();
 				}
 			}
 			/*[- end of function -]*/
+
+			/*]]>*/
 		</script>
 	</th:block>
 </html>
